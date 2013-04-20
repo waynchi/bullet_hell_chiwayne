@@ -14,6 +14,24 @@ This Bullet Hell will have 5 or more seperate moving things (not including the p
 | Power-Ups     | Gives the Player allies, a bomb, or upgraded weapons 								   |
 | Allies        | Temporarily appears next to the player and fires at Enemies							   |
 
+#### Enemy Bullet
+![Enemy Bullet](images/EnemyBullet.png "Enemy Bullet")
+
+#### Player Bullet
+![Player Bullet](images/PlayerBullet.png "Player Bullet")
+
+#### Enemy Ship
+![Enemy Ship](images/Enemy.png "Enemy Ship")
+
+#### Power-ups
+![Power-up](images/Powerup.png "Power-up")
+
+#### Allies
+![Allies](images/Allies.png "Allies")
+
+#### Player
+![Player](images/Player.png "Player Ship")
+
 ## Control Scheme
 The Player will be able to control the ship through the keyboard.
 
