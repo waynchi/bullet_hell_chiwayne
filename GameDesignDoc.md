@@ -1,14 +1,20 @@
-# Game Design Document
-This is a place holder for your game design document. You are advised to write your document in [Markdown](http://daringfireball.net/projects/markdown/) and the following section will show you how to write a document using Markdown markup.
-
-Alternativley, you can write your document in plain text if you wish.
+# Bullet Hell
+My game will be an infinite Bullet Hell (also known as top down shooters) that will randomly spawn formations of enemies for the player to kill or avoid.
 
 ----
 
-## Markdown
-Markdown is a human-readable structured plain text format that is used to convert text into HTML. GitHub automatically renders Markdown into HTML.
+## Moving Things
+This Bullet Hell will have 5 or more seperate moving things (not including the player).
 
-This is a crash course on how to use Markdown. The following section will show you the plain text used to generate the document shown in the rendering section.
+| Object        | Function                                                                                                         |
+| --------------| ----------------------------------------------------------------------------------------------------------------:|
+| Enemy Bullet  | Destroys Player upon collision 										   |
+| Player Bullet | Destroys Enemies upon collision 										   |
+| Enemy Ships   | Destroys Player upon collision and fires Enemy Bullets. Also moves in formation (randomly determined from a set) |
+| Power-Ups     | Gives the Player allies, a bomb, or upgraded weapons 								   |
+| Allies        | Temporarily appears next to the player and fires at Enemies							   |
+
+
 
 ### Code
 
