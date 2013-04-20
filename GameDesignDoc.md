@@ -50,3 +50,5 @@ The game ends when you lose all of your lives.
 
 ![Layout](images/Game Layout.png "Game Layout")
 
+As for the Main Menu, there will be a simple start button.
+
