@@ -14,82 +14,21 @@ This Bullet Hell will have 5 or more seperate moving things (not including the p
 | Power-Ups     | Gives the Player allies, a bomb, or upgraded weapons 								   |
 | Allies        | Temporarily appears next to the player and fires at Enemies							   |
 
+## Control Scheme
+The Player will be able to control the ship through the keyboard.
 
+Left, Right, Up, and Down will move the ship in the four directions and Space Bar will fire the bullets.
+Pressing B will drop a bomb which will clear all the enemies on the screen.
 
-### Code
+## Scoring
+The score will not go down. Rather, the score will constantly increase depending on how long you have stayed alive. Not only that, killing enemies will award bonus points as to provide an incentive to tackle the enemies rather than just avoiding them.
 
-```
-# Header 1
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
+## Lives
+I will keep track of the players lives on the bottom left hand corner. The will start off with five lives. Getting hit by an enemy bullet will take away a life, clear the screen of all enemies, and revive you.
 
-You can also write in **bold** or _italics_. You can also ~~strike through~~ or write inline `Code Segments`
+The game ends when you lose all of your lives.
 
->Blockquotes are done as such.
+## Layout
 
-Just make sure to separate paragraphs with an emptyline. 
-Otherwise, they are considered in the same paragraph.
-
-You link to [Google](https://www.google.com) as such and lists are written has follows:
-  1. First you indent with two empty spaces.
-  1. Then, you use:
-    * `1.` to signal an ordered (i.e. numbered) list, or
-    * `*`, `-`, `+` to represent an unordered list.
-      1. Make sure to maintain indentation
-      1. As it is used to identify sub-lists
-  1. Numbering and symboles don't matter as they are auto-generated later.
-
-Tables are pretty easy to make:
-
-| Tables        | Are           | Easy          |
-| ------------- |:-------------:| -------------:|
-| left-aligned  | centered      | right-aligned |
-| header are    | bolded and    | centered      |
-| zebra stripes | are neat      | 1             |
-
-
-Images are added inline by using the following syntax
-![alt text](http://octodex.github.com/images/Professortocat_v2.png "Image Title")
-```
-
-----
-
-### Rendering
-This section shows the rendering of the plain text above.
-
-# Header 1
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
-
-You can also write in **bold** or _italics_. You can also ~~strike through~~ or write inline `Code Segments`
-
->Blockquotes are done as such.
-
-Just make sure to separate paragraphs with an emptyline. 
-Otherwise, they are considered in the same paragraph.
-
-You link to [Google](https://www.google.com) as such and lists are written has follows:
-  1. First you indent with two empty spaces.
-  1. Then, you use:
-    * `1.` to signal an ordered (i.e. numbered) list, or
-    * `*`, `-`, `+` to represent an unordered list.
-      1. Make sure to maintain indentation
-      1. As it is used to identify sub-lists
-  1. Numbering and symboles don't matter as they are auto-generated later.
-
-Tables are pretty easy to make:
-
-| Tables        | Are           | Easy          |
-| ------------- |:-------------:| -------------:|
-| left-aligned  | centered      | right-aligned |
-| header are    | bolded and    | centered      |
-| zebra stripes | are neat      | 1             |
-
-
-Images are added inline by using the following syntax
-![alt text](http://octodex.github.com/images/Professortocat_v2.png "Image Title")
+![Layout](images/Game Layout.png "Game Layout")
 
