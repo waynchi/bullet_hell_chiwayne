@@ -15,9 +15,9 @@ This Bullet Hell will have 5 or more seperate moving things (not including the p
 | Allies        | Temporarily appears next to the player and fires at Enemies							   |
 
 #### Enemy Bullet
-![Enemy Bullet](images/EnemyBullet.png "Enemy Bullet")
+![Enemy Bullet](images/Bullets.png "Enemy Bullet")
 
-#### Player Bullet
+#### Player Bullet(It will choose a random type for each formation)
 ![Player Bullet](images/PlayerBullet.png "Player Bullet")
 
 #### Enemy Ship
@@ -38,6 +38,8 @@ The Player will be able to control the ship through the keyboard.
 Left, Right, Up, and Down will move the ship in the four directions and Space Bar will fire the bullets.
 Pressing B will drop a bomb which will clear all the enemies on the screen.
 
+Pressing escape during the game will open the pause menu, which will allow you to resume, go to the title screen, or quit the game.
+
 ## Scoring
 The score will not go down. Rather, the score will constantly increase depending on how long you have stayed alive. Not only that, killing enemies will award bonus points as to provide an incentive to tackle the enemies rather than just avoiding them.
 
@@ -48,7 +50,15 @@ The game ends when you lose all of your lives.
 
 ## Layout
 
+This is the Game Layout
+
 ![Layout](images/Game Layout.png "Game Layout")
 
-As for the Main Menu, there will be a simple start button.
+This is the Start Menu
+
+![Start Menu](images/Title Screen.png "Title Screen")
+
+This is the Pause Menu
+
+![Pause Menu](images/Pause Screen.png "Pause Screen")
 
