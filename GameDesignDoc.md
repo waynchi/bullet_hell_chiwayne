@@ -14,10 +14,10 @@ This Bullet Hell will have 5 or more seperate moving things (not including the p
 | Power-Ups     | Gives the Player allies, a bomb, or upgraded weapons 								   |
 | Allies        | Temporarily appears next to the player and fires at Enemies							   |
 
-#### Enemy Bullet
+#### Enemy Bullet(It will choose a random type for each formation)
 ![Enemy Bullet](images/Bullets.png "Enemy Bullet")
 
-#### Player Bullet(It will choose a random type for each formation)
+#### Player Bullet
 ![Player Bullet](images/PlayerBullet.png "Player Bullet")
 
 #### Enemy Ship
