@@ -8,6 +8,7 @@ MainWindow::MainWindow()  {
   down = false;
   space = false;
   pbulletcount = 0;
+  enemycount = 10;
   bound = new QRectF(-300,-300,600,600);
   scene = new QGraphicsScene();
   view = new QGraphicsView( scene );
@@ -32,12 +33,7 @@ MainWindow::MainWindow()  {
   scene->addItem(playerobject);
   
   //Enemy
-  int enemyspawn = (rand() % 570) - 300;
-  Enemy *tempE = new Enemy(EnemyPixMap, enemyspawn, -360);
-  tempE->setvY(rand()%6 + 2);
-  tempE->setFiringRate(rand()%20 +40);
-  EnemyList.push_back(tempE);
-  scene->addItem(tempE);
+  
   
   //Powerup
   PowerupObject = new Powerup(PowerupPixMap, 50,50);
@@ -121,7 +117,23 @@ void MainWindow::handleTimer()
     scene->addItem(tempPB);
     pbulletcount = 10;
   }
-
+  if(enemycount > 0)
+  {
+    enemycount--;
+  }
+  if(enemycount == 0)
+  {
+    for (int ii = 0; ii < rand()%2 +1 ; ii++)
+    {
+      int enemyspawn = (rand() % 570) - 300;
+      Enemy *tempE = new Enemy(EnemyPixMap, enemyspawn, -360);
+      tempE->setvY(rand()%6 + 2);
+      tempE->setFiringRate(rand()%20 +40);
+      EnemyList.push_back(tempE);
+      scene->addItem(tempE);
+    }
+    enemycount = 30;
+  }
   
   
   

@@ -92,8 +92,9 @@ private:
     bool up;
     bool space;
     
-    /** counts */
+    // counts
     int pbulletcount;
+    int enemycount;
     
     //Vectors
     /** vector holding Player Bullets */
