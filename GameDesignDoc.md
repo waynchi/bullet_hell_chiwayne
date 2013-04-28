@@ -13,6 +13,7 @@ This Bullet Hell will have 5 or more seperate moving things (not including the p
 | Enemy Ships   | Destroys Player upon collision and fires Enemy Bullets. Randomly Spawns |
 | Power-Ups     | Gives the Player allies, a bomb, or upgraded weapons 								   |
 | Allies        | Temporarily appears next to the player and fires at Enemies							   |
+| Background    | Scrolls behind to provide beautiful scenery!   |
 
 #### Enemy Bullet
 ![Enemy Bullet](images/Bullets.png "Enemy Bullet")
