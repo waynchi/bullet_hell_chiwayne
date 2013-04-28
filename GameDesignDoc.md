@@ -10,11 +10,11 @@ This Bullet Hell will have 5 or more seperate moving things (not including the p
 | --------------| ----------------------------------------------------------------------------------------------------------------:|
 | Enemy Bullet  | Destroys Player upon collision 										   |
 | Player Bullet | Destroys Enemies upon collision 										   |
-| Enemy Ships   | Destroys Player upon collision and fires Enemy Bullets. Also moves in formation (randomly determined from a set) |
+| Enemy Ships   | Destroys Player upon collision and fires Enemy Bullets. Randomly Spawns |
 | Power-Ups     | Gives the Player allies, a bomb, or upgraded weapons 								   |
 | Allies        | Temporarily appears next to the player and fires at Enemies							   |
 
-#### Enemy Bullet(It will choose a random type for each formation)
+#### Enemy Bullet
 ![Enemy Bullet](images/Bullets.png "Enemy Bullet")
 
 #### Player Bullet
