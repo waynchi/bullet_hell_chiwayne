@@ -35,7 +35,7 @@ This Bullet Hell will have 5 or more seperate moving things (not including the p
 ![Player](images/Player.png "Player Ship")
 
 #### Artillery
-![Artillery](images/Cannon.png "Artillery")
+![Artillery](images/Artillery.png "Artillery")
 
 #### Artillery Shell
 ![Artillery Shell](images/ball.png "Artillery Shell")
