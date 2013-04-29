@@ -46,7 +46,7 @@ void Enemy::setY(int ny)
 void Enemy::setFiringRate(int nFR)
 {
   FR = nFR;
-  count = FR;
+  count = 0;
 }
 
 int Enemy::getFiringRate()

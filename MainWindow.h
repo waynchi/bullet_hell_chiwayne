@@ -60,6 +60,8 @@ private:
     QGraphicsView *view;
     /** Timer to help with animation. */
     QTimer *timer;
+    /** Timer to handle player death */
+    QTimer *timer2;
     /** The window that contains everything. */
     QWidget *window;
     /** Player Pixmap */
@@ -95,6 +97,11 @@ private:
     // counts
     int pbulletcount;
     int enemycount;
+    int timercount;
+    int interval;
+    
+    /**player lives count */
+    int lives;
     
     //Vectors
     /** vector holding Player Bullets */
@@ -107,6 +114,7 @@ private:
     vector<Ally*> AlliesList;
 public slots:
   void handleTimer();
+  void handleDeath();
 
 };
 

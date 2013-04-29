@@ -13,14 +13,13 @@ void Player::change(bool left, bool right, bool up, bool down)
 {
 
     if(left)
-    x-=5;
+    x-=10;
     if(right)
-    x+=5;
+    x+=10;
     if(up)
     y-=5;
     if(down)
     y+=5;
-    cout << x << "  " << y << endl;
 }
 void Player::move()
 {
