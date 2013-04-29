@@ -11,9 +11,9 @@ This Bullet Hell will have 5 or more seperate moving things (not including the p
 | Enemy Bullet  | Destroys Player upon collision 										   |
 | Player Bullet | Destroys Enemies upon collision 										   |
 | Enemy Ships   | Destroys Player upon collision and fires Enemy Bullets. Randomly Spawns |
-| Power-Ups     | Gives the Player allies, a bomb, or upgraded weapons 								   |
+| Power-Ups     | Gives the Player allies											   |
 | Allies        | Temporarily appears next to the player and fires at Enemies							   |
-| Background    | Scrolls behind to provide beautiful scenery!   |
+
 
 #### Enemy Bullet
 ![Enemy Bullet](images/Bullets.png "Enemy Bullet")
@@ -37,15 +37,14 @@ This Bullet Hell will have 5 or more seperate moving things (not including the p
 The Player will be able to control the ship through the keyboard.
 
 Left, Right, Up, and Down will move the ship in the four directions and Space Bar will fire the bullets.
-Pressing B will drop a bomb which will clear all the enemies on the screen.
 
-Pressing escape during the game will open the pause menu, which will allow you to resume, go to the title screen, or quit the game.
+Pressing escape during the game will pause the game.
 
 ## Scoring
 The score will not go down. Rather, the score will constantly increase depending on how long you have stayed alive. Not only that, killing enemies will award bonus points as to provide an incentive to tackle the enemies rather than just avoiding them.
 
 ## Lives
-I will keep track of the players lives on the bottom left hand corner. The will start off with five lives. Getting hit by an enemy bullet will take away a life, clear the screen of all enemies, and revive you.
+I will keep track of the players lives on the top right hand corner. The will start off with three lives. Getting hit by an enemy bullet will take away a life, clear the screen of all enemies, and revive you.
 
 The game ends when you lose all of your lives.
 
@@ -55,11 +54,4 @@ This is the Game Layout
 
 ![Layout](images/Game Layout.png "Game Layout")
 
-This is the Start Menu
-
-![Start Menu](images/Title Screen.png "Title Screen")
-
-This is the Pause Menu
-
-![Pause Menu](images/Pause Screen.png "Pause Screen")
 
