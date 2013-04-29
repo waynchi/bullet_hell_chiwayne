@@ -12,17 +12,37 @@ MainWindow::MainWindow()  {
   lives = 3;
   timercount = 0;
   interval = 50;
-  bound = new QRectF(-300,-300,600,600);
+  score = 0;
+  bound = new QRectF(-250,-250,500,500);
   scene = new QGraphicsScene();
   view = new QGraphicsView( scene );
-  view->setFixedSize(600, 600);
+  view->setFixedSize(500, 500);
   view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   view->setSceneRect(*bound); 
   mainLayout = new QVBoxLayout;
-  mainLayout->addWidget(view);
   setLayout(mainLayout);
   setFocus();
+ 
+  //title window
+  QHBoxLayout *HBoxLayout = new QHBoxLayout;
+  startbutton = new QPushButton;
+  exitbutton = new QPushButton;
+  QFormLayout *formLayout = new QFormLayout;
+  startbutton = new QPushButton("Start");
+  exitbutton = new QPushButton("Quit");
+  titleLayout = new QVBoxLayout;
+  HBoxLayout->addWidget(startbutton);
+  HBoxLayout->addWidget(exitbutton);
+  
+  nameedit = new QLineEdit;
+  QLabel *nameLabel = new QLabel("name");
+  
+  formLayout->addRow(nameLabel, nameedit);
+  titleLayout->addLayout(HBoxLayout);
+  titleLayout->addLayout(formLayout);
+  mainLayout->addLayout(titleLayout);
+  mainLayout->addWidget(view);
   
   PowerupObject = NULL;
   playerpixmap = new QPixmap("images/Player.png");
@@ -32,8 +52,6 @@ MainWindow::MainWindow()  {
   PowerupPixMap = new QPixmap("images/Powerup.png");
   AlliesPixMap = new QPixmap("images/AlliesActual.png");
   AlliesBulletPixMap = new QPixmap("images/AlliedBullet.png");
-  playerobject = new Player(playerpixmap, 0,0);
-  scene->addItem(playerobject);
  
   
   //Ally
@@ -44,14 +62,55 @@ MainWindow::MainWindow()  {
   timer2 = new QTimer(this);
   timer2->setInterval(1000);
   timer->setInterval(interval);
-  timer->start();
+ 
+  connect(startbutton, SIGNAL(clicked()), this, SLOT(start()));
+  connect(exitbutton, SIGNAL(clicked()), this, SLOT(quit()));
   connect(timer, SIGNAL(timeout()), this, SLOT(handleTimer()));
   connect(timer2, SIGNAL(timeout()), this, SLOT(handleDeath()));
+  
 }
 
 MainWindow::~MainWindow() {
-
+ 
 }
+
+void MainWindow::start()
+{
+   if(timer->isActive())
+   {
+     timer2->start();
+     lives=3;
+     playerobject->setX(-25);
+     playerobject->setY(200);
+     score = 0;
+     timer->stop();
+   }
+   else if(!timer2->isActive())
+   {
+     timer->start();
+     playerobject = new Player(playerpixmap, 0,0);
+     if(nameedit->text().isEmpty())
+     {     scoreword = new QGraphicsSimpleTextItem("NO NAME");
+     }
+     else{
+     	   scoreword = new QGraphicsSimpleTextItem(nameedit->text());
+     }
+     
+     scoreword->setPos(-240, -245);
+     scoretext = new QGraphicsSimpleTextItem("0");
+     scoretext->setPos(-240, -225);
+     scene->addItem(playerobject);
+     scene->addItem(scoreword);
+     scene->addItem(scoretext);
+   }
+   
+}
+
+void MainWindow::quit()
+{
+  exit(1);
+}
+
 void MainWindow::handleDeath()
 {
   for(unsigned int a = 0; a < EnemyBulletList.size(); a++)
@@ -86,7 +145,15 @@ void MainWindow::handleDeath()
   
 void MainWindow::handleTimer()
 {
-  setFocus();
+  stringstream ss;
+  string s;
+  ss << score;
+  s = ss.str();
+  scoretext->setText(s.c_str());
+  if(timercount%25 == 0)
+  {
+    setFocus();
+  }
   timercount++;
   if(timercount == 125 && interval > 10)
   {
@@ -324,7 +391,16 @@ void MainWindow::keyPressEvent(QKeyEvent *e){
 	  break;
 	case Qt::Key_Space:
 	  space = true;
-	  break;	  
+	  break;	
+	case Qt::Key_Escape:
+	  if(!timer2->isActive())
+	  {
+	    if(timer->isActive())
+	      timer->stop();
+	    else
+	      timer->start();
+	  }
+	  break;  
 	}
 	
 	/*if(e->key() == Qt::Key_Left)

@@ -62,8 +62,14 @@ private:
     QTimer *timer;
     /** Timer to handle player death */
     QTimer *timer2;
-    /** The window that contains everything. */
-    QWidget *window;
+    /** Button for starting the game */
+    QPushButton *startbutton;
+    /** Button for Quitting the game */
+    QPushButton *exitbutton;
+    /** line for entering the name */
+    QLineEdit *nameedit;
+    /** Layout for title */
+    QVBoxLayout *titleLayout;
     /** Player Pixmap */
     QPixmap *playerpixmap;
     /** Player Bullet Pixmap */
@@ -102,6 +108,12 @@ private:
     
     /**player lives count */
     int lives;
+    /**player score count */
+    int score;
+    /**player score text item*/
+    QGraphicsSimpleTextItem *scoretext;
+    /**score text item */
+    QGraphicsSimpleTextItem *scoreword;
     
     //Vectors
     /** vector holding Player Bullets */
@@ -112,9 +124,13 @@ private:
     vector<EnemyBullet*> EnemyBulletList;
     /** vector holding Allies */
     vector<Ally*> AlliesList;
+    
+    
 public slots:
   void handleTimer();
   void handleDeath();
+  void start();
+  void quit();
 
 };
 

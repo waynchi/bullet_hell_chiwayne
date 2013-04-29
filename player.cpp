@@ -17,27 +17,27 @@ void Player::change(bool left, bool right, bool up, bool down)
     if(right)
     x+=10;
     if(up)
-    y-=10;
+    y-=5;
     if(down)
     y+=5;
 }
 void Player::move()
 {
-  if(x<=-300)
+  if(x<=-250)
   {
-    x = -300;
+    x = -250;
   }
-  if(y >=300-65)
+  if(y >=250-65)
   {
-    y = 300-65;
+    y = 250-65;
   }
-  if(y <= -300)
+  if(y <= -250)
   {
-    y = -300;
+    y = -250;
   }
-  if(x >= 300-55)
+  if(x >= 250-55)
   {
-    x = 300-55;
+    x = 250-55;
   }
   setPos(x,y);
 }
