@@ -34,15 +34,9 @@ MainWindow::MainWindow()  {
   AlliesBulletPixMap = new QPixmap("images/AlliedBullet.png");
   playerobject = new Player(playerpixmap, 0,0);
   scene->addItem(playerobject);
-  
-  //Powerup
-  PowerupObject = new Powerup(PowerupPixMap, 50,50);
-  scene->addItem(PowerupObject);
+ 
   
   //Ally
-  Ally *tempA = new Ally(AlliesPixMap, playerobject->getX() - 25 , playerobject->getY());
-  AlliesList.push_back(tempA);
-  scene->addItem(tempA);
  
  
   
@@ -94,7 +88,7 @@ void MainWindow::handleTimer()
 {
   setFocus();
   timercount++;
-  if(timercount == 200 && interval > 15)
+  if(timercount == 125 && interval > 10)
   {
     interval -= 5;
     timercount = 0;
@@ -138,9 +132,18 @@ void MainWindow::handleTimer()
   }
   for (unsigned int b = 0; b < AlliesList.size(); b++)
   {
-  	AlliesList[b]->setX(playerobject->getX() - 25);
-  	AlliesList[b]->setY(playerobject->getY());
-  	AlliesList[b]->move();
+  	if(b == 0)
+  	{
+  		AlliesList[b]->setX(playerobject->getX() - 35);
+  		AlliesList[b]->setY(playerobject->getY());
+  		AlliesList[b]->move();
+  	}
+  	if(b == 1)
+  	{
+  		AlliesList[b]->setX(playerobject->getX() + 55);
+  		AlliesList[b]->setY(playerobject->getY());
+  		AlliesList[b]->move();
+   	}
   	if(AlliesList[b]->count > 0)
   	{
   	  AlliesList[b]->count--;
@@ -192,6 +195,7 @@ void MainWindow::handleTimer()
   }
   
   //collisions
+  //Player Bullet Collision
   for(unsigned  int a = 0; a < PlayerBulletList.size(); a++)
   {
     PlayerBullet *itemA = PlayerBulletList[a];
@@ -204,6 +208,14 @@ void MainWindow::handleTimer()
       {
         if(itemB !=NULL)
         {
+          if(PowerupObject == NULL)
+          {
+            if(rand()%20 == 10)
+            {
+              PowerupObject = new Powerup(PowerupPixMap, EnemyList[aa]->getX(),EnemyList[aa]->getY());
+              scene->addItem(PowerupObject);
+            }
+          }
           delete itemA;
     	  PlayerBulletList[a] = NULL;
     	  delete itemB;
@@ -214,6 +226,33 @@ void MainWindow::handleTimer()
     }
     }
   }
+  //Powerup Collision
+  if(PowerupObject != NULL)
+  {
+  if(PowerupObject->collidesWithItem(playerobject))
+  {
+      cout << AlliesList.size() << endl;
+      if(AlliesList.size() == 1)
+      {
+        Ally *tempA = new Ally(AlliesPixMap, playerobject->getX() + 55 , playerobject->getY());
+  	AlliesList.push_back(tempA);
+  	scene->addItem(tempA);
+      }
+      if(AlliesList.size() == 0)
+      {
+         Ally *tempA = new Ally(AlliesPixMap, playerobject->getX() - 35 , playerobject->getY());
+  	 AlliesList.push_back(tempA);
+  	 scene->addItem(tempA);
+      }
+  
+    Powerup *tempP = PowerupObject;
+    delete tempP;
+    PowerupObject = NULL;
+  }
+  }
+ 
+ 
+  //Enemy Bullet collision
   bool tester = true;
   for(unsigned int b = 0; b < EnemyBulletList.size(); b++)
   {
@@ -235,6 +274,7 @@ void MainWindow::handleTimer()
   }
   if(tester)
   {
+  //Enemy Collision
   for(unsigned int c = 0; c < EnemyList.size(); c++)
   {
     Enemy *itemE = EnemyList[c];

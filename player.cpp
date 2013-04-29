@@ -17,7 +17,7 @@ void Player::change(bool left, bool right, bool up, bool down)
     if(right)
     x+=10;
     if(up)
-    y-=5;
+    y-=10;
     if(down)
     y+=5;
 }
