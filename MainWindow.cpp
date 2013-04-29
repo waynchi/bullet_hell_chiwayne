@@ -87,6 +87,8 @@ void MainWindow::start()
    }
    else if(!timer2->isActive())
    {
+     scene->clear();
+     score = 0;
      timer->start();
      playerobject = new Player(playerpixmap, 0,0);
      if(nameedit->text().isEmpty())
@@ -99,9 +101,15 @@ void MainWindow::start()
      scoreword->setPos(-240, -245);
      scoretext = new QGraphicsSimpleTextItem("0");
      scoretext->setPos(-240, -225);
+     livesword = new QGraphicsSimpleTextItem("LIVES");
+     livesword->setPos(210, -245);
+     livestext = new QGraphicsSimpleTextItem("3");
+     livestext->setPos(210, -225);
      scene->addItem(playerobject);
      scene->addItem(scoreword);
      scene->addItem(scoretext);
+     scene->addItem(livestext);
+     scene->addItem(livesword);
    }
    
 }
@@ -139,17 +147,35 @@ void MainWindow::handleDeath()
   interval = 50;
   timer->setInterval(interval);
   timercount = 0;
+  if(lives == 0)
+  {
+    QGraphicsSimpleTextItem *gameover = new QGraphicsSimpleTextItem("GAME OVER");
+    livestext->setText("0");
+    gameover->setPos(-50,0);
+    scene->addItem(gameover);
+    Player *tempPla = playerobject;
+    playerobject = NULL;
+    delete tempPla;
+  }
+  else  
   timer->start();
   timer2->stop();
 }
   
 void MainWindow::handleTimer()
 {
-  stringstream ss;
-  string s;
+  score+=10;
+  stringstream ss, ll;
+  string s,l;
   ss << score;
   s = ss.str();
   scoretext->setText(s.c_str());
+  ss.clear();
+  ll << lives;
+  l = ll.str();
+  livestext->setText(l.c_str());
+  ll.clear();
+  
   if(timercount%25 == 0)
   {
     setFocus();
@@ -160,7 +186,6 @@ void MainWindow::handleTimer()
     interval -= 5;
     timercount = 0;
     timer->setInterval(interval);
-    cout << "making faster!" << interval << endl;
   }
   playerobject->change(left, right, up, down);
   playerobject->move();
@@ -283,6 +308,7 @@ void MainWindow::handleTimer()
               scene->addItem(PowerupObject);
             }
           }
+          score +=1000;
           delete itemA;
     	  PlayerBulletList[a] = NULL;
     	  delete itemB;
@@ -298,7 +324,6 @@ void MainWindow::handleTimer()
   {
   if(PowerupObject->collidesWithItem(playerobject))
   {
-      cout << AlliesList.size() << endl;
       if(AlliesList.size() == 1)
       {
         Ally *tempA = new Ally(AlliesPixMap, playerobject->getX() + 55 , playerobject->getY());
@@ -311,7 +336,7 @@ void MainWindow::handleTimer()
   	 AlliesList.push_back(tempA);
   	 scene->addItem(tempA);
       }
-  
+    score +=10000;
     Powerup *tempP = PowerupObject;
     delete tempP;
     PowerupObject = NULL;

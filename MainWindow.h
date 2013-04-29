@@ -114,6 +114,10 @@ private:
     QGraphicsSimpleTextItem *scoretext;
     /**score text item */
     QGraphicsSimpleTextItem *scoreword;
+    /**player lives text item*/
+    QGraphicsSimpleTextItem *livestext;
+    /**lives text item */
+    QGraphicsSimpleTextItem *livesword;
     
     //Vectors
     /** vector holding Player Bullets */
