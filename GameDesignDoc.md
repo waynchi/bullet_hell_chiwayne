@@ -13,7 +13,8 @@ This Bullet Hell will have 5 or more seperate moving things (not including the p
 | Enemy Ships   | Destroys Player upon collision and fires Enemy Bullets. Randomly Spawns |
 | Power-Ups     | Gives the Player allies											   |
 | Allies        | Temporarily appears next to the player and fires at Enemies							   |
-| Shurken       | Shoots out randomly from the four corners killing the player if it hits!   |
+| Artillery     | Randomly Spawns on the right side of the screen; shoots Artiller Shells at a random rate towards the left    |
+| Artillery Shell    | Spawns from a cannon |
 
 #### Enemy Bullet
 ![Enemy Bullet](images/Bullets.png "Enemy Bullet")
@@ -32,6 +33,12 @@ This Bullet Hell will have 5 or more seperate moving things (not including the p
 
 #### Player
 ![Player](images/Player.png "Player Ship")
+
+#### Artillery
+![Artillery](images/Cannon.png "Artillery")
+
+#### Artillery Shell
+![Artillery Shell](images/ball.png "Artillery Shell")
 
 ## Control Scheme
 The Player will be able to control the ship through the keyboard.
