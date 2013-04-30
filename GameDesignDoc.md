@@ -12,9 +12,9 @@ This Bullet Hell will have 5 or more seperate moving things (not including the p
 | Player Bullet | Destroys Enemies upon collision 										   |
 | Enemy Ships   | Destroys Player upon collision and fires Enemy Bullets. Randomly Spawns |
 | Power-Ups     | Gives the Player allies											   |
-| Allies        | Temporarily appears next to the player and fires at Enemies							   |
-| Artillery     | Randomly Spawns on the right side of the screen; shoots Artiller Shells at a random rate towards the left    |
-| Artillery Shell    | Spawns from a cannon |
+| Allies        | Appears next to the player and fires at Enemies							   |
+| Artillery     | Does not destroy Player nor is it destroyable(as it is on the "ground". Randomly Spawns on the right side of the screen; shoots Artiller Shells at a random rate towards the left    |
+| Artillery Shell    | Spawns from a cannon. Destroys Player upon Collision |
 
 #### Enemy Bullet
 ![Enemy Bullet](images/Bullets.png "Enemy Bullet")
