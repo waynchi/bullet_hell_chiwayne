@@ -33,12 +33,17 @@
 #include "EnemyBullet.h"
 #include "Ally.h"
 #include "Powerup.h"
+#include "Artillery.h"
+#include "Shell.h"
+#include "Background.h"
 #include "cstdlib"
 #include <QKeyEvent>
 #include <QMouseEvent>
 
 using namespace std;
 
+/** The Class that contains everything required to operate the game
+@author Wayne Chi */
 class MainWindow : public QWidget {
 	Q_OBJECT
 	
@@ -49,8 +54,10 @@ public:
   
   
 protected:
+  /** Method that allows keyPresses */
   void keyPressEvent(QKeyEvent *e);
- // void mousePressEvent(QMouseEvent *e);
+  //void mousePressEvent(QMouseEvent *e);
+  /** Method that tracks keyReleases */
   void keyReleaseEvent(QKeyEvent *e);
   
 private:
@@ -84,27 +91,34 @@ private:
     QPixmap *AlliesPixMap;
     /** Ally Bullet Pixmap */
     QPixmap *AlliesBulletPixMap;
+    // Artillery Pixmap
+    QPixmap *ArtilleryPixMap;
+    // Shell Pixmap
+    QPixmap *ShellPixMap;
+    // Background Pixmap
+    QPixmap *BackgroundPixMap;
     
+    /** The Bound of the game */
     QRectF *bound;
     /** Player Object */
     Player *playerobject;
     /** Power up Object */
     Powerup *PowerupObject;
+    // Artillery Object
+    Artillery *ArtilleryObject;
+    //Background Objects
+    Background *BackgroundObject1;
+    Background *BackgroundObject2;
+    Background *BackgroundObject3;
     
+    /** The Main Layout of the game */
     QVBoxLayout *mainLayout;
     
-    /** key presses */
-    bool left;
-    bool right;
-    bool down;
-    bool up;
-    bool space;
+    /** key presses to keep track of */
+    bool left, right, down, up, space;
     
-    // counts
-    int pbulletcount;
-    int enemycount;
-    int timercount;
-    int interval;
+    /** counts to keep track of */
+    int pbulletcount, enemycount, timercount, interval;
     
     /**player lives count */
     int lives;
@@ -128,12 +142,18 @@ private:
     vector<EnemyBullet*> EnemyBulletList;
     /** vector holding Allies */
     vector<Ally*> AlliesList;
+    /** vector holding Shells */
+    vector<Shell*> ShellList;
     
     
 public slots:
+  /** handles the main timer */
   void handleTimer();
+  /** handles the timer upon dying */
   void handleDeath();
+  /** handles the start button getting clicked */
   void start();
+  /** quits the game */
   void quit();
 
 };

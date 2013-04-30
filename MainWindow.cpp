@@ -13,6 +13,8 @@ MainWindow::MainWindow()  {
   timercount = 0;
   interval = 50;
   score = 0;
+  PowerupObject = NULL;
+  ArtilleryObject = NULL;
   bound = new QRectF(-250,-250,500,500);
   scene = new QGraphicsScene();
   view = new QGraphicsView( scene );
@@ -29,8 +31,8 @@ MainWindow::MainWindow()  {
   startbutton = new QPushButton;
   exitbutton = new QPushButton;
   QFormLayout *formLayout = new QFormLayout;
-  startbutton = new QPushButton("Start");
-  exitbutton = new QPushButton("Quit");
+  startbutton = new QPushButton("&Start");
+  exitbutton = new QPushButton("&Quit");
   titleLayout = new QVBoxLayout;
   HBoxLayout->addWidget(startbutton);
   HBoxLayout->addWidget(exitbutton);
@@ -44,7 +46,7 @@ MainWindow::MainWindow()  {
   mainLayout->addLayout(titleLayout);
   mainLayout->addWidget(view);
   
-  PowerupObject = NULL;
+  
   playerpixmap = new QPixmap("images/Player.png");
   PlayerBulletPixMap = new QPixmap("images/PlayerBulletActual.png");
   EnemyPixMap = new QPixmap("images/Enemy.png");
@@ -52,11 +54,11 @@ MainWindow::MainWindow()  {
   PowerupPixMap = new QPixmap("images/Powerup.png");
   AlliesPixMap = new QPixmap("images/AlliesActual.png");
   AlliesBulletPixMap = new QPixmap("images/AlliedBullet.png");
- 
+  ArtilleryPixMap = new QPixmap("images/Artillery.png");
+  ShellPixMap = new QPixmap("images/ball.png");
+  BackgroundPixMap = new QPixmap("images/Background.png");
   
-  //Ally
- 
- 
+  
   
   timer = new QTimer(this);
   timer2 = new QTimer(this);
@@ -76,6 +78,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::start()
 {
+   
    if(timer->isActive())
    {
      timer2->start();
@@ -89,7 +92,14 @@ void MainWindow::start()
    {
      scene->clear();
      score = 0;
+     lives = 3;
      timer->start();
+     BackgroundObject1 = new Background(BackgroundPixMap, -250, -250);
+     scene->addItem(BackgroundObject1);
+     BackgroundObject2 = new Background(BackgroundPixMap, -250, -750);
+     scene->addItem(BackgroundObject2);
+     BackgroundObject3 = new Background(BackgroundPixMap, -250, -1250);
+     scene->addItem(BackgroundObject3);
      playerobject = new Player(playerpixmap, 0,0);
      if(nameedit->text().isEmpty())
      {     scoreword = new QGraphicsSimpleTextItem("NO NAME");
@@ -111,6 +121,7 @@ void MainWindow::start()
      scene->addItem(livestext);
      scene->addItem(livesword);
    }
+
    
 }
 
@@ -137,13 +148,21 @@ void MainWindow::handleDeath()
   {
     delete EnemyList[d];
   }
+  for(unsigned int e = 0; e < ShellList.size(); e++)
+  {
+    delete ShellList[e];
+  }
   Powerup *tempP = PowerupObject;
   delete tempP;
   PowerupObject = NULL;
+  Artillery *tempArt = ArtilleryObject;
+  ArtilleryObject = NULL;
+  delete tempArt;
   EnemyBulletList.clear();
   PlayerBulletList.clear();
   AlliesList.clear();
   EnemyList.clear();
+  ShellList.clear();
   interval = 50;
   timer->setInterval(interval);
   timercount = 0;
@@ -175,29 +194,50 @@ void MainWindow::handleTimer()
   l = ll.str();
   livestext->setText(l.c_str());
   ll.clear();
-  
   if(timercount%25 == 0)
   {
     setFocus();
   }
   timercount++;
-  if(timercount == 125 && interval > 10)
+  if(timercount == 150 && interval > 10)
   {
     interval -= 5;
     timercount = 0;
     timer->setInterval(interval);
   }
+  BackgroundObject1->move();
+  BackgroundObject2->move();
+  BackgroundObject3->move();
+  if(BackgroundObject1->getY() == 250)
+    BackgroundObject1->setY(-1250);
+  if(BackgroundObject2->getY() == 250)
+    BackgroundObject2->setY(-1250);
+  if(BackgroundObject3->getY() == 250)
+    BackgroundObject3->setY(-1250);
+  
   playerobject->change(left, right, up, down);
   playerobject->move();
   if(PowerupObject != NULL)
   {
     PowerupObject->move();
+    if(PowerupObject->getY()>350)
+    {
+      Powerup *tempPower = PowerupObject;
+      delete tempPower;
+      PowerupObject = NULL;
+    }
   }
   for (unsigned int i = 0; i < PlayerBulletList.size(); i++)
   {
   	if(PlayerBulletList[i]!=NULL)
   	{
   	PlayerBulletList[i]->move();
+  	if(PlayerBulletList[i]->getY() < -350)
+  	{
+  	  PlayerBullet *tempPlayerBullet = PlayerBulletList[i];
+  	  delete tempPlayerBullet;
+  	  PlayerBulletList[i] = NULL;
+  	}
   	}
   }
   for (unsigned int j = 0; j < EnemyList.size(); j++)
@@ -211,28 +251,45 @@ void MainWindow::handleTimer()
   	}
   	if(EnemyList[j]->count == 0)
   	{
-  	  EnemyBullet *tempEB = new EnemyBullet(EnemyBulletPixMap, EnemyList[j]->getX()+15, EnemyList[j]->getY()+60);
+  	  EnemyBullet *tempEB = new EnemyBullet(EnemyBulletPixMap, EnemyList[j]->getX()+5, EnemyList[j]->getY()+10);
   	  EnemyBulletList.push_back(tempEB);
     	  scene->addItem(tempEB);
     	  EnemyList[j]->count = EnemyList[j]->getFiringRate();
     	}
+        if(EnemyList[j]->getY() > 350)
+  	{
+  	  Enemy *temporaryE = EnemyList[j];
+  	  delete temporaryE;
+  	  EnemyList[j] = NULL;
+  	}
     }
+    
   }
   for (unsigned int k = 0; k < EnemyBulletList.size(); k++)
   {
-  	EnemyBulletList[k]->move();
+  	if(EnemyBulletList[k] != NULL)
+  	{
+  	  EnemyBulletList[k]->move();
+  	  if(EnemyBulletList[k]->getY() > 350)
+  	  {
+  	    EnemyBullet *temporaryEB = EnemyBulletList[k];
+  	    delete temporaryEB;
+  	    EnemyBulletList[k] = NULL;
+   	  }
+   	}
   }
+  
   for (unsigned int b = 0; b < AlliesList.size(); b++)
   {
   	if(b == 0)
   	{
-  		AlliesList[b]->setX(playerobject->getX() - 35);
+  		AlliesList[b]->setX(playerobject->getX() - 25);
   		AlliesList[b]->setY(playerobject->getY());
   		AlliesList[b]->move();
   	}
   	if(b == 1)
   	{
-  		AlliesList[b]->setX(playerobject->getX() + 55);
+  		AlliesList[b]->setX(playerobject->getX() + 45);
   		AlliesList[b]->setY(playerobject->getY());
   		AlliesList[b]->move();
    	}
@@ -255,7 +312,7 @@ void MainWindow::handleTimer()
   
   if(space == true && pbulletcount == 0)
   {
-    PlayerBullet *tempPB = new PlayerBullet(PlayerBulletPixMap, playerobject->getX()+8, playerobject->getY()-20);
+    PlayerBullet *tempPB = new PlayerBullet(PlayerBulletPixMap, playerobject->getX()+5, playerobject->getY()-10);
     PlayerBulletList.push_back(tempPB);
     scene->addItem(tempPB);
     pbulletcount = 10;
@@ -266,10 +323,10 @@ void MainWindow::handleTimer()
   }
   if(enemycount == 0)
   {
-    for (int ii = 0; ii < rand()%4 +1 ; ii++)
+    for (int ii = 0; ii < rand()%7 +1 ; ii++)
     {
-      int enemyspawn = (rand() % 570) - 300;
-      Enemy *tempE = new Enemy(EnemyPixMap, enemyspawn, -360 - (rand()%50));
+      int enemyspawn = (rand() % 475) - 250;
+      Enemy *tempE = new Enemy(EnemyPixMap, enemyspawn, -330 - (rand()%50));
       tempE->setvY(rand()%6 + 2);
       tempE->setFiringRate(rand()%20 +40);
       EnemyList.push_back(tempE);
@@ -277,7 +334,7 @@ void MainWindow::handleTimer()
     }
     if(rand() %3 == 1)
     {
-      Enemy *tempFE = new Enemy(EnemyPixMap, playerobject->getX(), -360);
+      Enemy *tempFE = new Enemy(EnemyPixMap, playerobject->getX(), -330);
       tempFE->setvY(rand()%6 + 2);
       tempFE->setFiringRate(rand()%20 +40);
       EnemyList.push_back(tempFE);
@@ -285,8 +342,57 @@ void MainWindow::handleTimer()
     }
     enemycount = 30;
   }
+  if(ArtilleryObject == NULL)
+  {
+    if(rand()%20 == 5)
+    {
+      ArtilleryObject = new Artillery(ArtilleryPixMap, 180, -330);
+      ArtilleryObject->setFiringRate(rand()%10 +30);
+      scene->addItem(ArtilleryObject);
+    }
+  }
+  if(ArtilleryObject != NULL)
+  {
+    ArtilleryObject->move();
+    if(ArtilleryObject->getY() > 260)
+    {
+      Artillery *tempArt = ArtilleryObject;
+      ArtilleryObject = NULL;
+      delete tempArt;
+    }
+    else
+    {
+        if(ArtilleryObject->count > 0)
+  	{
+  	  ArtilleryObject->count--;
+  	}
+  	if(ArtilleryObject->count == 0)
+  	{
+  	  Shell *tempShell = new Shell(ShellPixMap, ArtilleryObject->getX()+10, ArtilleryObject->getY());
+    	  scene->addItem(tempShell);
+    	  ShellList.push_back(tempShell);
+    	  ArtilleryObject->count = ArtilleryObject->getFiringRate();
+    	}
+    }
+  }
+  for (unsigned int s = 0; s < ShellList.size(); s++)
+  {
+  	if(ShellList[s] != NULL)
+  	{
+  	  ShellList[s]->move();
+  	  if(ShellList[s]->getX() < -300)
+  	  {
+  	    Shell *temporaryS = ShellList[s];
+  	    delete temporaryS;
+  	    ShellList[s] = NULL;
+  	  }
+  	}
+  }
+      
   
   //collisions
+ 
+  
   //Player Bullet Collision
   for(unsigned  int a = 0; a < PlayerBulletList.size(); a++)
   {
@@ -326,13 +432,13 @@ void MainWindow::handleTimer()
   {
       if(AlliesList.size() == 1)
       {
-        Ally *tempA = new Ally(AlliesPixMap, playerobject->getX() + 55 , playerobject->getY());
+        Ally *tempA = new Ally(AlliesPixMap, playerobject->getX() + 45 , playerobject->getY());
   	AlliesList.push_back(tempA);
   	scene->addItem(tempA);
       }
       if(AlliesList.size() == 0)
       {
-         Ally *tempA = new Ally(AlliesPixMap, playerobject->getX() - 35 , playerobject->getY());
+         Ally *tempA = new Ally(AlliesPixMap, playerobject->getX() - 25 , playerobject->getY());
   	 AlliesList.push_back(tempA);
   	 scene->addItem(tempA);
       }
@@ -345,7 +451,7 @@ void MainWindow::handleTimer()
  
  
   //Enemy Bullet collision
-  bool tester = true;
+  bool tester = true,tester2 = true;
   for(unsigned int b = 0; b < EnemyBulletList.size(); b++)
   {
     EnemyBullet *itemC = EnemyBulletList[b];
@@ -380,11 +486,34 @@ void MainWindow::handleTimer()
         timer->stop();
         timer2->start();
         lives--;
+        tester2 = false;
         break;
       }
     }
   }
   }
+  if(tester2)
+  {
+  //Artillery Bullet Collision
+  for(unsigned int d = 0; d < ShellList.size(); d++)
+  {
+    Shell *itemG = ShellList[d];
+    if(itemG != NULL)
+    {
+      Player *itemH = playerobject;
+      if(itemG->collidesWithItem(itemH))
+      {
+        delete itemG;
+        ShellList[d] = NULL;
+        timer->stop();
+        timer2->start();
+        lives--;
+        break;
+      }
+    }
+  }
+  }
+  
   
   
 }
