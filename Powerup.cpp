@@ -6,7 +6,7 @@ Powerup::Powerup(QPixmap *pm, int nx, int ny) : Thing(pm,nx,ny)
   x = nx;
   y = ny;
   vX = 0;
-  vY = 5;
+  vY = 3;
   pixMap = pm;
   this->setPixmap(*pixMap);
 }

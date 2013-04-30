@@ -10,7 +10,7 @@ class Artillery: public Thing {
 public:
   /** Basic Constructor. Creates the image and sets X and Y */
   Artillery(QPixmap *pm, int nx, int ny);
-  /** Defines the movement of the Enemy */
+  /** Defines the movement of the Artillery */
   void move();
   /** Sets X */
   void setX(int nx);
@@ -24,9 +24,9 @@ public:
   void setY(int ny);
   /** Sets Y incremental (Y velocity) */
   void setvY(int nvY);
-  /** Sets the Firing Rate of the enemy */
+  /** Sets the Firing Rate of the Artillery */
   void setFiringRate(int nFR);
-  /** Gets the Firing Rate of the enemy 
+  /** Gets the Firing Rate of the Artillery 
   @return Firing Rate */
   int getFiringRate();
   /** A public variable that is used to count for the Firing rate */

@@ -10,7 +10,7 @@ class Shell: public Thing {
 public:
   /** Basic Constructor. Creates the image and sets X and Y */
   Shell(QPixmap *pm, int nx, int ny);
-  /** Defines the movement of the Enemy */
+  /** Defines the movement of the Shell */
   void move();
   /** Sets X */
   void setX(int nx);
