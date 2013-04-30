@@ -13,11 +13,11 @@
 ### Compile & Run Instructions
 The grader should use the following procedure to compile and run the code:
 #Compile Instructions
-qmake -project
-qmake
-make
++ qmake -project
++ echo qmake
++ echo make
 #Doxygen Instructions
-doxygen -g config.txt
-doxygen config.txt
++ doxygen -g config.txt
++ doxygen config.txt
 #Command to run
 ./game_chiwayne (or whatever your folder name is)
