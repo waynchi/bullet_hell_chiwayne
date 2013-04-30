@@ -1,25 +1,23 @@
 # Game - Programming Assignments Private Repository
 ### Student Information
-  + Name: Tommy Trojan
-  + USC Email: ttrojan@usc.edu
-  + USC ID: 0123456789
+  + Name: Wayne Chi
+  + USC Email: chiwayne@usc.edu
+  + USC ID: 2290059571
 
 ### Game Information
-  + Game Name: myAwsomeGame
-  + Game Description: One sentence game description
+  + Game Name: Bullet Hell
+  + Game Description: This game is a top down shooter with hordes of enemies; Last as long as possible!
   + [Game Design Doc](GameDesignDoc.md)
 
 
 ### Compile & Run Instructions
 The grader should use the following procedure to compile and run the code:
-```shell
 #Compile Instructions
-echo "Write command here"
+qmake -project
+qmake
+make
 #Doxygen Instructions
-echo "Write command here"
+doxygen -g config.txt
+doxygen config.txt
 #Command to run
-echo "Write command here"
-```
-
-### Screenshots -- [Optional]
-You can either remove this section or add screenshots if you wish.
+./game_chiwayne (or whatever your folder name is)
