@@ -23,6 +23,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <fstream>
 #include <QGraphicsSimpleTextItem>
 #include <QGraphicsItemGroup>
 #include <QString>
@@ -124,6 +125,8 @@ private:
     int lives;
     /**player score count */
     int score;
+    //name
+    string name;
     /**player score text item*/
     QGraphicsSimpleTextItem *scoretext;
     /**score text item */

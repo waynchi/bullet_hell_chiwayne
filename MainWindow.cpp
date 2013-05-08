@@ -78,7 +78,6 @@ MainWindow::~MainWindow() {
 
 void MainWindow::start()
 {
-   
    if(timer->isActive())
    {
      timer2->start();
@@ -103,9 +102,11 @@ void MainWindow::start()
      playerobject = new Player(playerpixmap, 0,0);
      if(nameedit->text().isEmpty())
      {     scoreword = new QGraphicsSimpleTextItem("NO NAME");
+     	   name = "NO NAME";
      }
      else{
      	   scoreword = new QGraphicsSimpleTextItem(nameedit->text());
+     	   name = nameedit->text().toStdString();
      }
      
      scoreword->setPos(-240, -245);
@@ -175,8 +176,71 @@ void MainWindow::handleDeath()
     Player *tempPla = playerobject;
     playerobject = NULL;
     delete tempPla;
+    //handling highscores
+    ifstream ifile("highscore.txt");
+    ofstream myfile;
+    vector<int> highscore;
+    vector<string> highscoren;
+    int i = 0;
+    string line;
+    string line2;
+    stringstream ss;
+    if(ifile)
+    {
+    	if( ifile.is_open())
+    	{
+    	  while(ifile.good())
+    	  {
+    	    getline(ifile,line);
+    	    highscoren.push_back(line);
+    	    getline (ifile,line2);
+    	    i = atoi(line2.c_str());
+    	    highscore.push_back(i);
+    	  }
+    	}
+  	myfile.open("highscore.txt");
+   	for(unsigned int j = 0; j < highscoren.size()-1; j++)
+  	{
+        if(score > highscore[j])
+        {
+          myfile << name;
+          myfile << "\n";
+     	  myfile << score;
+     	  myfile << "\n";
+          score = 0;
+          myfile << highscoren[j];
+          myfile << "\n";          
+          myfile << highscore[j];
+          myfile << "\n";
+        }
+        else
+        {
+          myfile << highscoren[j];
+          myfile << "\n";
+          myfile << highscore[j];
+          myfile << "\n";
+        }
+     }
+     if(score == 0)
+     {
+     }
+     else
+     {
+       myfile << name;
+       myfile << "\n";
+       myfile << score;
+     }
+   }
+   else
+   {
+     myfile.open("highscore.txt");
+     myfile << name;
+     myfile << "\n";
+     myfile << score;
+   }
+   myfile.close();
   }
-  else  
+  else
   timer->start();
   timer2->stop();
 }
