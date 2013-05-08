@@ -23,6 +23,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <fstream>
 #include <QGraphicsSimpleTextItem>
 #include <QGraphicsItemGroup>
 #include <QString>
@@ -97,6 +98,11 @@ private:
     QPixmap *ShellPixMap;
     // Background Pixmap
     QPixmap *BackgroundPixMap;
+    QPixmap *BackgroundPixMap2;
+    QPixmap *BackgroundPixMap3;
+    
+    //level
+    int level;
     
     /** The Bound of the game */
     QRectF *bound;
@@ -124,6 +130,8 @@ private:
     int lives;
     /**player score count */
     int score;
+    //name
+    string name;
     /**player score text item*/
     QGraphicsSimpleTextItem *scoretext;
     /**score text item */
@@ -144,6 +152,8 @@ private:
     vector<Ally*> AlliesList;
     /** vector holding Shells */
     vector<Shell*> ShellList;
+    //leveling up;
+    void levelup();
     
     
 public slots:

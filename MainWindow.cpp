@@ -57,6 +57,9 @@ MainWindow::MainWindow()  {
   ArtilleryPixMap = new QPixmap("images/Artillery.png");
   ShellPixMap = new QPixmap("images/ball.png");
   BackgroundPixMap = new QPixmap("images/Background.png");
+  BackgroundPixMap2 = new QPixmap("images/Background2.png");
+  BackgroundPixMap3 = new QPixmap("images/background3.png");
+  
   
   
   
@@ -78,14 +81,15 @@ MainWindow::~MainWindow() {
 
 void MainWindow::start()
 {
-   
    if(timer->isActive())
    {
      timer2->start();
      lives=3;
-     playerobject->setX(-25);
-     playerobject->setY(200);
+     level = 0;
+     levelup();
      score = 0;
+     level = 1;
+
      timer->stop();
    }
    else if(!timer2->isActive())
@@ -94,6 +98,7 @@ void MainWindow::start()
      score = 0;
      lives = 3;
      timer->start();
+     level = 1;
      BackgroundObject1 = new Background(BackgroundPixMap, -250, -250);
      scene->addItem(BackgroundObject1);
      BackgroundObject2 = new Background(BackgroundPixMap, -250, -750);
@@ -103,9 +108,11 @@ void MainWindow::start()
      playerobject = new Player(playerpixmap, 0,0);
      if(nameedit->text().isEmpty())
      {     scoreword = new QGraphicsSimpleTextItem("NO NAME");
+     	   name = "NO NAME";
      }
      else{
      	   scoreword = new QGraphicsSimpleTextItem(nameedit->text());
+     	   name = nameedit->text().toStdString();
      }
      
      scoreword->setPos(-240, -245);
@@ -175,12 +182,172 @@ void MainWindow::handleDeath()
     Player *tempPla = playerobject;
     playerobject = NULL;
     delete tempPla;
+    //handling highscores
+    ifstream ifile("highscore.txt");
+    ofstream myfile;
+    vector<int> highscore;
+    vector<string> highscoren;
+    int i = 0;
+    string line;
+    string line2;
+    stringstream ss;
+    if(ifile)
+    {
+    	if( ifile.is_open())
+    	{
+    	  while(ifile.good())
+    	  {
+    	    getline(ifile,line);
+    	    highscoren.push_back(line);
+    	    getline (ifile,line2);
+    	    i = atoi(line2.c_str());
+    	    highscore.push_back(i);
+    	  }
+    	}
+  	myfile.open("highscore.txt");
+   	for(unsigned int j = 0; j < highscoren.size()-1; j++)
+  	{
+        if(score > highscore[j])
+        {
+          myfile << name;
+          myfile << "\n";
+     	  myfile << score;
+     	  myfile << "\n";
+          score = 0;
+          myfile << highscoren[j];
+          myfile << "\n";          
+          myfile << highscore[j];
+          myfile << "\n";
+        }
+        else
+        {
+          myfile << highscoren[j];
+          myfile << "\n";
+          myfile << highscore[j];
+          myfile << "\n";
+        }
+     }
+     if(score == 0)
+     {
+     }
+     else
+     {
+       myfile << name;
+       myfile << "\n";
+       myfile << score;
+     }
+   }
+   else
+   {
+     myfile.open("highscore.txt");
+     myfile << name;
+     myfile << "\n";
+     myfile << score;
+   }
+   myfile.close();
   }
-  else  
+  else
   timer->start();
   timer2->stop();
 }
   
+void MainWindow::levelup()
+{
+  for(unsigned int a = 0; a < EnemyBulletList.size(); a++)
+  {
+    delete EnemyBulletList[a];
+  }
+  for(unsigned int b = 0; b < PlayerBulletList.size(); b++)
+  {
+    delete PlayerBulletList[b];
+  }
+  for(unsigned int c = 0; c < AlliesList.size(); c++)
+  {
+    delete AlliesList[c];
+  }
+  for(unsigned int d = 0; d < EnemyList.size(); d++)
+  {
+    delete EnemyList[d];
+  }
+  for(unsigned int e = 0; e < ShellList.size(); e++)
+  {
+    delete ShellList[e];
+  }
+  Powerup *tempP = PowerupObject;
+  delete tempP;
+  Player *tempPla = playerobject;
+  playerobject = NULL;
+  delete tempPla;
+  PowerupObject = NULL;
+  Artillery *tempArt = ArtilleryObject;
+  ArtilleryObject = NULL;
+  delete tempArt;
+  EnemyBulletList.clear();
+  PlayerBulletList.clear();
+  AlliesList.clear();
+  EnemyList.clear();
+  ShellList.clear();
+  interval = 50;
+  timer->setInterval(interval);
+  timercount = 0;
+  Background* tempBack = BackgroundObject1;
+  delete tempBack;
+  tempBack = BackgroundObject2;
+  delete tempBack;
+  tempBack = BackgroundObject3;
+  delete tempBack;
+  scene->clear();
+  if(level == 0)
+  {
+  BackgroundObject1 = new Background(BackgroundPixMap, -250, -250);
+  scene->addItem(BackgroundObject1);
+  BackgroundObject2 = new Background(BackgroundPixMap, -250, -750);
+  scene->addItem(BackgroundObject2);
+  BackgroundObject3 = new Background(BackgroundPixMap, -250, -1250);
+  scene->addItem(BackgroundObject3);
+  }
+  if(level == 1)
+  {
+  BackgroundObject1 = new Background(BackgroundPixMap2, -250, -250);
+  scene->addItem(BackgroundObject1);
+  BackgroundObject2 = new Background(BackgroundPixMap2, -250, -750);
+  scene->addItem(BackgroundObject2);
+  BackgroundObject3 = new Background(BackgroundPixMap2, -250, -1250);
+  scene->addItem(BackgroundObject3);
+  }
+  if(level == 2)
+  {
+  BackgroundObject1 = new Background(BackgroundPixMap3, -250, -250);
+  scene->addItem(BackgroundObject1);
+  BackgroundObject2 = new Background(BackgroundPixMap3, -250, -750);
+  scene->addItem(BackgroundObject2);
+  BackgroundObject3 = new Background(BackgroundPixMap3, -250, -1250);
+  scene->addItem(BackgroundObject3);
+  }  
+  playerobject = new Player(playerpixmap, 0,0);
+  scene->addItem(playerobject);
+  if(nameedit->text().isEmpty())
+     {     scoreword = new QGraphicsSimpleTextItem("NO NAME");
+     	   name = "NO NAME";
+     }
+     else{
+     	   scoreword = new QGraphicsSimpleTextItem(nameedit->text());
+     	   name = nameedit->text().toStdString();
+     }
+     
+     scoreword->setPos(-240, -245);
+     scoretext = new QGraphicsSimpleTextItem("0");
+     scoretext->setPos(-240, -225);
+     livesword = new QGraphicsSimpleTextItem("LIVES");
+     livesword->setPos(210, -245);
+     livestext = new QGraphicsSimpleTextItem("3");
+     livestext->setPos(210, -225);
+     scene->addItem(scoreword);
+     scene->addItem(scoretext);
+     scene->addItem(livestext);
+     scene->addItem(livesword);
+     timer->start();
+}
 void MainWindow::handleTimer()
 {
   score+=10;
@@ -204,6 +371,18 @@ void MainWindow::handleTimer()
     interval -= 5;
     timercount = 0;
     timer->setInterval(interval);
+  }
+  if(score >= 20000 && level == 1)
+  {
+    timer->stop();
+    levelup();
+    level = 2;
+  }
+  if(score >= 50000 && level == 2)
+  {
+    timer->stop();
+    levelup();
+    level = 3;
   }
   BackgroundObject1->move();
   BackgroundObject2->move();
@@ -323,7 +502,7 @@ void MainWindow::handleTimer()
   }
   if(enemycount == 0)
   {
-    for (int ii = 0; ii < rand()%7 +1 ; ii++)
+    for (int ii = 0; ii < (rand()%3)*level +1 ; ii++)
     {
       int enemyspawn = (rand() % 475) - 250;
       Enemy *tempE = new Enemy(EnemyPixMap, enemyspawn, -330 - (rand()%50));
@@ -379,6 +558,14 @@ void MainWindow::handleTimer()
   {
   	if(ShellList[s] != NULL)
   	{
+  	  if(ShellList[s]->getY() > playerobject->getY())
+  	  {
+  	    ShellList[s]->setvY(-1);
+  	  }
+  	  if(ShellList[s]->getY() < playerobject->getY())
+  	  {
+  	    ShellList[s]->setvY(4);
+  	  }
   	  ShellList[s]->move();
   	  if(ShellList[s]->getX() < -300)
   	  {

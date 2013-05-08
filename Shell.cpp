@@ -38,3 +38,8 @@ void Shell::setY(int ny)
 {
   y = ny;
 }
+
+void Shell::setvY(int nvy)
+{
+  vY = nvy;
+}
