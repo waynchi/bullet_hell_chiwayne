@@ -98,6 +98,11 @@ private:
     QPixmap *ShellPixMap;
     // Background Pixmap
     QPixmap *BackgroundPixMap;
+    QPixmap *BackgroundPixMap2;
+    QPixmap *BackgroundPixMap3;
+    
+    //level
+    int level;
     
     /** The Bound of the game */
     QRectF *bound;
@@ -147,6 +152,8 @@ private:
     vector<Ally*> AlliesList;
     /** vector holding Shells */
     vector<Shell*> ShellList;
+    //leveling up;
+    void levelup();
     
     
 public slots:
