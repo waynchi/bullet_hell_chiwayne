@@ -22,6 +22,8 @@ public:
   int getY();
   /** Sets Y */
   void setY(int ny);
+  /** Sets vY */
+  void setvY(int nvy);
   
   
 private:

@@ -558,6 +558,14 @@ void MainWindow::handleTimer()
   {
   	if(ShellList[s] != NULL)
   	{
+  	  if(ShellList[s]->getY() > playerobject->getY())
+  	  {
+  	    ShellList[s]->setvY(-1);
+  	  }
+  	  if(ShellList[s]->getY() < playerobject->getY())
+  	  {
+  	    ShellList[s]->setvY(4);
+  	  }
   	  ShellList[s]->move();
   	  if(ShellList[s]->getX() < -300)
   	  {
