@@ -8,6 +8,7 @@
   + Game Name: Bullet Hell
   + Game Description: This game is a top down shooter with hordes of enemies; Last as long as possible!
   + [Game Design Doc](GameDesignDoc.md)
+  + License: LICENSE.txt
 
 
 ### Compile & Run Instructions
